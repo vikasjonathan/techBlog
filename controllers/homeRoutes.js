@@ -1,23 +1,41 @@
 const router = require('express').Router();
 const { error } = require('console');
-//const { Project, User } = require('../models');
+const { BlogPost, Comments, User } = require('../models');
 const withAuth = require('../utils/auth');
 
+//get route for homepage
 router.get('/', async (req, res) => {
     try {
-        // Get all projects and JOIN with user data
-       /* const projectData = await Project.findAll({
+
+        const blogPostData = await BlogPost.findAll({
             include: [
                 {
                     model: User,
-                    attributes: ['name'],
+                    attributes: ['username'],
                 },
             ],
-        });*/
-        res.render('homepage')
-    } catch(error) {
-        res.status(500).json(error)
-    };
+        });
+        const blogPosts = blogPostData.map((blogPost) => blogPost.get({ plain: true }));
+        res.render('homepage', {
+            blogPosts,
+            logged_in: req.session.logged_in
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-module.exports =router;
+//get route for login page
+router.get('/login', async (req, res) => {
+    try {
+        if(req.session.logged_in) {
+            res.redirect('/dashboard');
+            return
+        }
+        res.render('login');
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+module.exports = router;
