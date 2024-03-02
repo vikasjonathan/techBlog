@@ -18,7 +18,7 @@
 
   ## Deployed <a id="Deployed"></a>
 
-  Deployed link <a href="https://morning-temple-55405-78270faafd23.herokuapp.com/"</a>
+  Deployed link <a href="https://morning-temple-55405-78270faafd23.herokuapp.com/">CLick here</a>
 
   ## Contributing <a id="contributing"></a>
 
